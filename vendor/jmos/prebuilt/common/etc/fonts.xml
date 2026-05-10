@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<familyset version="23">
+    <!-- Default sans-serif font -->
+    <family name="sans-serif">
+        <font weight="400" style="normal">Inter-Regular.ttf</font>
+        <font weight="400" style="italic">Inter-Italic.ttf</font>
+        <font weight="500" style="normal">Inter-Medium.ttf</font>
+        <font weight="500" style="italic">Inter-MediumItalic.ttf</font>
+        <font weight="700" style="normal">Inter-Bold.ttf</font>
+        <font weight="700" style="italic">Inter-BoldItalic.ttf</font>
+    </family>
+
+    <!-- Fallback to Roboto if needed -->
+    <alias name="arial" to="sans-serif" />
+    <alias name="helvetica" to="sans-serif" />
+    <alias name="tahoma" to="sans-serif" />
+    <alias name="verdana" to="sans-serif" />
+</familyset>

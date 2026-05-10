@@ -1,0 +1,38 @@
+# AOSP Source
+.repo/
+android/
+art/
+bionic/
+bootable/
+build/
+dalvik/
+developers/
+device/
+external/
+frameworks/
+hardware/
+kernel/
+libcore/
+libnativehelper/
+manifest/
+out/
+packages/
+pdk/
+platform_testing/
+prebuilts/
+sdk/
+system/
+test/
+toolchain/
+tools/
+
+# Build artifacts
+*.img
+*.zip
+*.tar.gz
+
+# IDE / System
+.vscode/
+.idea/
+*.swp
+.DS_Store
