@@ -24,7 +24,21 @@ on boot
     write /sys/block/zram0/comp_algorithm lz4
 
 on property:sys.boot_completed=1
-    # Final performance tweaks after boot
+    # Final performance tweaks after boot (Vortex & HyperOS Engine)
     write /proc/sys/kernel/sched_boost 1
     write /proc/sys/vm/swappiness 60
     write /proc/sys/vm/vfs_cache_pressure 100
+
+    # HyperOS Core Latency Control: Low-Latency Virtual Memory Cache Writes
+    write /proc/sys/vm/dirty_background_ratio 5
+    write /proc/sys/vm/dirty_ratio 10
+    write /proc/sys/vm/dirty_expire_centisecs 500
+    write /proc/sys/vm/dirty_writeback_centisecs 100
+
+    # CPU Schedutil Governor Tuning (Aggressive frequency scaling for fluid touch response)
+    # policy0 (Efficiency cluster)
+    write /sys/devices/system/cpu/cpufreq/policy0/schedutil/up_rate_limit_us 500
+    write /sys/devices/system/cpu/cpufreq/policy0/schedutil/down_rate_limit_us 1000
+    # policy4 (Performance cluster)
+    write /sys/devices/system/cpu/cpufreq/policy4/schedutil/up_rate_limit_us 500
+    write /sys/devices/system/cpu/cpufreq/policy4/schedutil/down_rate_limit_us 1000

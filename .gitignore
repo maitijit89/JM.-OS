@@ -1,5 +1,6 @@
 # AOSP Source
 .repo/
+cts/
 android/
 art/
 bionic/

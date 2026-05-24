@@ -50,6 +50,24 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.lmk.kill_heaviest_task=true \
     ro.lmk.kill_timeout_ms=100
 
+# Next-Level HyperOS Fluidity & SurfaceFlinger Graphics Engine
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.sf.disable_backpressure=1 \
+    debug.hwui.renderer=skiavk \
+    persist.sys.composition.type=gpu \
+    ro.surface_flinger.max_frame_buffer_acquired_buffers=3 \
+    ro.surface_flinger.use_color_management=true \
+    ro.surface_flinger.has_wide_color_display=true \
+    ro.surface_flinger.has_HDR_display=true \
+    ro.hwui.texture_cache_size=72 \
+    ro.hwui.layer_cache_size=48 \
+    ro.hwui.r_buffer_cache_size=8 \
+    ro.hwui.gradient_cache_size=1 \
+    ro.hwui.path_cache_size=32 \
+    ro.hwui.text_image_cache_width=2048 \
+    ro.hwui.text_image_cache_height=2048 \
+    ro.jmos.hyperos.fluidity=true
+
 # Privacy & Advanced Features
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.call_recording=true \
@@ -89,7 +107,8 @@ PRODUCT_COPY_FILES += \
 
 # Performance Init Script
 PRODUCT_COPY_FILES += \
-    vendor/jmos/prebuilt/common/etc/init/jmos-sysinit.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/jmos-sysinit.rc
+    vendor/jmos/prebuilt/common/etc/init/jmos-sysinit.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/jmos-sysinit.rc \
+    vendor/jmos/prebuilt/common/etc/init/jmos-vortex.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/jmos-vortex.rc
 
 # Fonts
 PRODUCT_COPY_FILES += \

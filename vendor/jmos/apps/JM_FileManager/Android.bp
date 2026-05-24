@@ -1,0 +1,19 @@
+// ====================================================================
+//            JM OS File Manager Module (Source Compiled)
+// ====================================================================
+// Custom system utility built directly into AOSP.
+// ====================================================================
+
+android_app {
+    name: "JM_FileManager",
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    platform_apis: true,
+    certificate: "platform",
+    privileged: true,
+    sdk_version: "current",
+    optimize: {
+        enabled: true,
+        shrink: true,
+    },
+}

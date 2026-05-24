@@ -1,0 +1,51 @@
+# JM OS - Hardcore Gaming & Ultra-Performance Optimization Init Subsystem
+# Copyright (c) 2026 JM OS Project. All rights reserved.
+
+on boot
+    # --- CPU Scheduling & Utility Clamping (uclamp) for Android 14 ---
+    # uclamp ensures foreground gaming tasks get immediate allocations on top cores
+    write /sys/device/system/cpu/cpu0/uclamp.min 20
+    write /sys/device/system/cpu/cpu4/uclamp.min 50
+    write /sys/device/system/cpu/cpu7/uclamp.min 80
+    
+    # Enable scheduler RT (Real-Time) thread optimizations
+    write /proc/sys/kernel/sched_util_clamp_min_rt_default 500
+    write /proc/sys/kernel/sched_util_clamp_min 200
+
+    # --- Aggressive GPU Frequency Governance ---
+    # Qualcomm Adreno GPU Performance Locks
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
+    write /sys/class/kgsl/kgsl-3d0/force_bus_on 1
+    write /sys/class/kgsl/kgsl-3d0/force_clk_on 1
+    write /sys/class/kgsl/kgsl-3d0/force_no_nap 1
+    write /sys/class/kgsl/kgsl-3d0/devfreq/adrenodbg/down_threshold 10
+    write /sys/class/kgsl/kgsl-3d0/devfreq/adrenodbg/up_threshold 80
+
+    # ARM Mali GPU Performance Locks (Fallback paths for MediaTek / Exynos chipsets)
+    write /sys/class/misc/mali0/device/power_policy always_on
+    write /sys/devices/platform/mali.0/power_policy always_on
+    write /sys/module/mali_kbase/parameters/mali_dvfs_governor performance
+
+    # --- Sustained Gaming Thermal Profiles ---
+    # Shift thermal throttling bounds slightly to sustain high-framerate gameplay
+    write /sys/class/thermal/thermal_message/sconfig 10
+    write /sys/module/thermal/parameters/limit_temp 85
+    write /sys/devices/virtual/thermal/thermal_zone0/mode enabled
+
+on property:sys.boot_completed=1
+    # --- Low-Latency Competitive TCP Network Optimization ---
+    # Forces high socket priority and cuts TCP packet processing delays for low ping
+    write /proc/sys/net/ipv4/tcp_low_latency 1
+    write /proc/sys/net/ipv4/tcp_fastopen 3
+    write /proc/sys/net/ipv4/tcp_slow_start_after_idle 0
+    write /proc/sys/net/ipv4/tcp_timestamps 0
+
+    # Expand maximum system networking sockets queue
+    write /proc/sys/net/core/somaxconn 1024
+    write /proc/sys/net/core/netdev_max_backlog 5000
+    write /proc/sys/net/ipv4/tcp_max_syn_backlog 2048
+
+    # --- Active Memory Optimization for Multi-window Gaming ---
+    # Allocates clean pages rapidly, bypassing page reclaim stalls
+    write /proc/sys/vm/swappiness 30
+    write /proc/sys/vm/vfs_cache_pressure 50

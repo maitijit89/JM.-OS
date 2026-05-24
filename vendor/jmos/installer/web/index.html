@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JM OS | Web Installer & Flashing Hub</title>
+    <!-- Premium Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="space-bg">
+        <div class="stars"></div>
+        <div class="nebula-1"></div>
+        <div class="nebula-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Premium Header -->
+        <header class="app-header">
+            <div class="brand-logo">
+                <div class="logo-circle">
+                    <i class="fa-solid fa-compact-disc spin-slow"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>JM OS</h1>
+                    <span class="sub-brand">Web Flashing Command Center</span>
+                </div>
+            </div>
+            <div id="status-badge" class="connection-status-badge disconnected">
+                <span class="status-pulse"></span>
+                <span id="status-text">Disconnected</span>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="installer-grid">
+            <!-- Sidebar with guidelines and tips -->
+            <aside class="sidebar-card">
+                <div class="sidebar-header">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <h2>Prerequisites</h2>
+                </div>
+                <ul class="prereq-list">
+                    <li>
+                        <i class="fa-solid fa-check-circle verified"></i>
+                        <div>
+                            <strong>Compatible Browser</strong>
+                            <p>Chrome, Edge, or Opera supporting WebUSB API.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-triangle-exclamation warning-icon"></i>
+                        <div>
+                            <strong>USB Drivers (Windows)</strong>
+                            <p>Install Google USB Drivers to allow fastboot interface recognition.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-battery-three-quarters warning-icon"></i>
+                        <div>
+                            <strong>Battery 50%+</strong>
+                            <p>Ensure your device has enough power to prevent interruption.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-database danger-icon"></i>
+                        <div>
+                            <strong>Backup Everything</strong>
+                            <p>Flashing will erase all data, music, settings, and photos.</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <hr class="card-divider">
+
+                <div class="sidebar-header">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <h2>Troubleshooting</h2>
+                </div>
+                <p class="sidebar-help-text">
+                    If your device is not detected, unplug/replug the USB cable, try a different USB port (USB 2.0 preferred), or check Device Manager for the "Android Device" bootloader driver.
+                </p>
+                <a href="https://jmos.dev/drivers" target="_blank" class="sidebar-link">
+                    Download Drivers <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </aside>
+
+            <!-- Flashing Steps Container -->
+            <section class="main-wizard">
+                <!-- Visual Step Indicator -->
+                <div class="step-tracker-container">
+                    <div class="step-node active" id="node-1">
+                        <div class="node-num">1</div>
+                        <span>Connect</span>
+                    </div>
+                    <div class="step-line" id="line-1"></div>
+                    <div class="step-node" id="node-2">
+                        <div class="node-num">2</div>
+                        <span>Unlock</span>
+                    </div>
+                    <div class="step-line" id="line-2"></div>
+                    <div class="step-node" id="node-3">
+                        <div class="node-num">3</div>
+                        <span>Build</span>
+                    </div>
+                    <div class="step-line" id="line-3"></div>
+                    <div class="step-node" id="node-4">
+                        <div class="node-num">4</div>
+                        <span>Flash</span>
+                    </div>
+                    <div class="step-line" id="line-4"></div>
+                    <div class="step-node" id="node-5">
+                        <div class="node-num">5</div>
+                        <span>Finish</span>
+                    </div>
+                </div>
+
+                <!-- Wizard Panel Cards -->
+                <div class="wizard-panels">
+                    
+                    <!-- STEP 1: CONNECT -->
+                    <div class="step-panel active" id="panel-1">
+                        <div class="panel-hero">
+                            <i class="fa-solid fa-cable-car hero-icon pulse-soft"></i>
+                            <h2>Connect Your Device</h2>
+                            <p>Put your phone into Bootloader (Fastboot) mode and connect it to your PC.</p>
+                        </div>
+                        <div class="instructions-card">
+                            <h3>How to enter Bootloader mode:</h3>
+                            <ol>
+                               <li>Power off your device completely.</li>
+                               <li>Press and hold <strong>Volume Down + Power</strong> buttons simultaneously until the fastboot logo appears.</li>
+                               <li>Plug in your USB-C cable.</li>
+                            </ol>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn btn-primary" id="btn-connect">
+                                <i class="fa-brands fa-usb"></i> Connect Phone
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: UNLOCK BOOTLOADER -->
+                    <div class="step-panel" id="panel-2">
+                        <div class="panel-hero">
+                            <i class="fa-solid fa-lock-open hero-icon"></i>
+                            <h2>Unlock Bootloader</h2>
+                            <p>Custom ROMs require an unlocked bootloader to modify system partitions.</p>
+                        </div>
+                        <div class="warning-banner">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            <div>
+                                <strong>Warning: Data Wipe</strong>
+                                <p>Unlocking will trigger a factory reset. Ignore if already unlocked.</p>
+                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" id="btn-skip-unlock">
+                                Already Unlocked <i class="fa-solid fa-forward"></i>
+                            </button>
+                            <button class="btn btn-danger" id="btn-unlock">
+                                <i class="fa-solid fa-key"></i> Unlock Bootloader
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: FIRMWARE BUILD SELECT -->
+                    <div class="step-panel" id="panel-3">
+                        <div class="panel-hero">
+                            <i class="fa-solid fa-box-archive hero-icon"></i>
+                            <h2>Choose Firmware</h2>
+                            <p>Select the latest JM OS official distribution or upload a local ROM package.</p>
+                        </div>
+                        
+                        <div class="firmware-options">
+                            <div class="firmware-card selected" id="opt-official">
+                                <div class="badge">Recommended</div>
+                                <div class="firmware-meta">
+                                    <h3>JM OS v1.0.0 (Official Stable)</h3>
+                                    <p class="meta-tag">Device: JM-Vortex-One (generic)</p>
+                                    <p class="changelog-preview">Features: Custom bootsounds, Vortex kernel, advanced privacy, premium HSL themes.</p>
+                                </div>
+                                <i class="fa-solid fa-cloud-arrow-down download-icon"></i>
+                            </div>
+
+                            <div class="firmware-card" id="opt-local">
+                                <div class="firmware-meta">
+                                    <h3>Local ZIP Image</h3>
+                                    <p class="meta-tag">Select a build from your drive</p>
+                                    <p class="changelog-preview">Useful for developers flashing custom or experimental AOSP builds.</p>
+                                </div>
+                                <i class="fa-solid fa-folder-open download-icon"></i>
+                                <input type="file" id="local-file-input" style="display: none;" accept=".zip,.bin,.img">
+                            </div>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="btn btn-secondary" id="btn-back-to-2">
+                                <i class="fa-solid fa-arrow-left"></i> Back
+                            </button>
+                            <button class="btn btn-primary" id="btn-firmware-confirm">
+                                Confirm Build <i class="fa-solid fa-circle-check"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: FLASHING PROCESS -->
+                    <div class="step-panel" id="panel-4">
+                        <div class="panel-hero">
+                            <i class="fa-solid fa-circle-notch hero-icon spin"></i>
+                            <h2>Flashing System Partitions</h2>
+                            <p>Installing JM OS. Please do not close this tab or unplug the device.</p>
+                        </div>
+
+                        <!-- Progress indicator -->
+                        <div class="progress-container">
+                            <div class="progress-meta">
+                                <span id="progress-task-name">Preparing installation files...</span>
+                                <span id="progress-percentage">0%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-bar" id="progress-bar-el" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Console Log -->
+                        <div class="console-wrapper">
+                            <div class="console-header">
+                                <span><i class="fa-solid fa-terminal"></i> Fastboot Terminal Log</span>
+                                <span class="console-dot-green"></span>
+                            </div>
+                            <div class="console-body" id="console-logs">
+                                <p class="log-info">Waiting to initialize flash...</p>
+                            </div>
+                        </div>
+
+                        <div class="action-bar">
+                            <button class="btn btn-primary" id="btn-start-flash">
+                                <i class="fa-solid fa-bolt"></i> Begin Flash OS
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: SUCCESS -->
+                    <div class="step-panel" id="panel-5">
+                        <div class="panel-hero">
+                            <div class="success-icon-wrapper">
+                                <i class="fa-solid fa-circle-check scale-up"></i>
+                            </div>
+                            <h2>Installation Complete!</h2>
+                            <p>JM OS has been flashed onto your device successfully.</p>
+                        </div>
+
+                        <div class="success-info-card">
+                            <h3>What's Next?</h3>
+                            <ul>
+                                <li><i class="fa-solid fa-circle-play"></i> Your device is currently rebooting into the initial system setup.</li>
+                                <li><i class="fa-solid fa-clock"></i> The first boot might take up to <strong>3-5 minutes</strong> as system resources compile.</li>
+                                <li><i class="fa-solid fa-comments"></i> Join our support forum or Telegram channel for regular builds and custom bootsounds updates.</li>
+                            </ul>
+                        </div>
+
+                        <div class="action-bar">
+                            <a href="https://t.me/jmos_official" target="_blank" class="btn btn-primary">
+                                <i class="fa-brands fa-telegram"></i> Join Community
+                            </a>
+                            <button class="btn btn-secondary" onclick="window.location.reload();">
+                                <i class="fa-solid fa-rotate-left"></i> Flash Another Device
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>JM OS v1.0.0 Stable (Official Build) • Custom AOSP Android-14</p>
+            <p>Designed for aesthetic excellence and audio perfection • <a href="https://jmos.dev" target="_blank">jmos.dev</a></p>
+        </footer>
+    </div>
+
+    <!-- Installer logic -->
+    <script src="app.js"></script>
+</body>
+</html>
